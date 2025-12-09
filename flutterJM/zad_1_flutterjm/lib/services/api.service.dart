@@ -3,11 +3,10 @@ import 'package:http/http.dart' as http;
 import '../models/journal_entry.dart';
 
 class ApiService {
-  static const String baseUrl = "https://.com/entries";
-
+  static const String baseUrl =
+      "https://6935d9d6fa8e704dafbf0fbe.mockapi.io/api/v1/JournalEntry";
   Future<List<JournalEntry>> fetchEntries() async {
     final response = await http.get(Uri.parse(baseUrl));
-
     if (response.statusCode == 200) {
       final List data = jsonDecode(response.body);
       return data.map((e) => JournalEntry.fromJson(e)).toList();
@@ -22,7 +21,6 @@ class ApiService {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(entry.toJson()),
     );
-
     if (response.statusCode != 201 && response.statusCode != 200) {
       throw Exception("Failed to create entry");
     }
